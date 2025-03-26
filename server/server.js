@@ -1,24 +1,25 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+require("dotenv").config();
+
+const db_url = process.env.DB_URL;
 
 mongoose
-  .connect("mongodb+srv://prnemkul:kaiballey@cluster0.fxjhl.mongodb.net/")
-  .then(() => {
-    console.log("MongoDb connected");
+  .connect(db_url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
-  .catch((error) => {
-    console.log(error);
-  });
+  .then(() => console.log("MongoDb connected"))
+  .catch((error) => console.error("MongoDB connection error:", error));
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: " http://localhost:5173/",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
@@ -34,4 +35,4 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-app.listen(PORT, () => console.log("Server is now running"));
+app.listen(PORT, () => console.log("Server is now running on port", PORT));
