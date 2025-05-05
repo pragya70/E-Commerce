@@ -8,7 +8,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config";
-import React, { Fragment, useState } from "react";
+import { addNewProduct, fetchAllProducts } from "@/store/admin/product-slice";
+import React, { Fragment, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 const initialFromData = {
   image: null,
@@ -32,7 +35,29 @@ const AdminProducts = () => {
 
   const [imageLoadingState, setImageLoadingState] = useState(false);
 
-  function onSubmit() {}
+  const { productList } = useSelector((state) => state.adminProducts);
+
+  const dispatch = useDispatch();
+
+  function onSubmit(e) {
+    e.preventDefault();
+    dispatch(addNewProduct({ ...formData, image: uploadImageUrl })).then(
+      (data) => {
+        console.log(data);
+        if (data?.payload?.success) {
+          dispatch(fetchAllProducts());
+          setOpenCreateProductDialog(false);
+          setImageFile(null);
+          setFromData(initialFromData);
+          toast.success("Product add Successfully");
+        }
+      }
+    );
+  }
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
   return (
     <Fragment>
       <div className="mb-5 w-full flex justify-end">
@@ -53,9 +78,9 @@ const AdminProducts = () => {
               <ProductImageUpload
                 imageFile={imageFile}
                 setImageFile={setImageFile}
-                uploadImageUrl={uploadImageUrl}
                 setUploadImageUrl={setUploadImageUrl}
                 setImageLoadingState={setImageLoadingState}
+                imageLoadingState={imageLoadingState}
               />
               <CommonForm
                 onSubmit={onSubmit}

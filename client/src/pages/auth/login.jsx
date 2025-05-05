@@ -2,9 +2,9 @@ import CommonForm from "@/components/common/form";
 import { loginFormControls } from "@/config";
 import { loginUser } from "@/store/auth-slice";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
 
 const initialState = {
   email: "",

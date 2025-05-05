@@ -2,9 +2,9 @@ import CommonForm from "@/components/common/form";
 import { registerFormControls } from "@/config";
 import { registerUser } from "@/store/auth-slice";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 
 const initialState = {
   userName: "",
@@ -26,7 +26,7 @@ const AuthLogin = () => {
         toast(data?.payload?.message);
         navigate("/auth/login");
       } else {
-        toast(data?.payload?.message);
+        toast.error(data?.payload?.message);
       }
     });
   }
