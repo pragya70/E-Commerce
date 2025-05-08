@@ -10,7 +10,7 @@ const AdminProductTile = ({
   handleDelete,
 }) => {
   return (
-    <Card className="w-full max-w-sm  mx-auto ">
+    <Card className="w-full max-w-sm mx-auto pt-0 ">
       <div className="relative">
         <img
           src={product?.image}
