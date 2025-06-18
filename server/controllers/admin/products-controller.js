@@ -15,7 +15,7 @@ const handleImageUpload = async (req, res) => {
     console.log(error);
     res.json({
       success: false,
-      message: "Error occured",
+      message: "Error occurred",
     });
   }
 };
@@ -34,8 +34,6 @@ const addProduct = async (req, res) => {
       totalStock,
       averageReview,
     } = req.body;
-
-    console.log(averageReview, "averageReview");
 
     const newlyCreatedProduct = new Product({
       image,
@@ -58,7 +56,7 @@ const addProduct = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Error occured",
+      message: "Error occurred",
     });
   }
 };
