@@ -25,6 +25,7 @@ const ProductListing = () => {
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const { user } = useSelector((state) => state.auth);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -85,6 +86,9 @@ const ProductListing = () => {
     dispatch(fetchProductDetail(getCurrentProductId));
   }
 
+  function handleAddToCart(getCurrentProductId) {
+    dispatch(addToCart({ userId: user?.id }));
+  }
   useEffect(() => {
     if (productDetails !== null) setIsOpenDetailsDialog(true);
   }, [productDetails]);
@@ -146,6 +150,7 @@ const ProductListing = () => {
                 <ShoppingProductTile
                   product={productItem}
                   handleGetProductDetails={handleGetProductDetails}
+                  handleAddToCart={handleAddToCart}
                 />
               ))
             : null}

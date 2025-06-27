@@ -18,6 +18,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
     return result?.data;
   }
 );
+
 export const fetchProductDetail = createAsyncThunk(
   "/products/fetchProductDetail",
   async (id) => {
