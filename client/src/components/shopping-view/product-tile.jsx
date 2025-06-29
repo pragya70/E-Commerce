@@ -7,7 +7,7 @@ import { brandOptionsMap, categoryOptionsMap } from "@/config";
 const ShoppingProductTile = ({
   product,
   handleGetProductDetails,
-  handleAddToCart,
+  handleAddtoCart,
 }) => {
   return (
     <Card className="w-full max-w-sm mx-auto pt-0 ">
@@ -51,7 +51,10 @@ const ShoppingProductTile = ({
         </CardContent>
       </div>
       <CardFooter>
-        <Button onClick={() => handleAddToCart(product?._id)} className="">
+        <Button
+          onClick={() => handleAddtoCart(product?._id)}
+          className="w-full"
+        >
           Add to cart
         </Button>
       </CardFooter>

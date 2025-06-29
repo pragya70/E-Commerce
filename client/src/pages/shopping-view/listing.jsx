@@ -10,12 +10,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import {
   fetchAllFilteredProducts,
   fetchProductDetail,
 } from "@/store/shop/product-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
@@ -82,12 +84,22 @@ const ProductListing = () => {
   }
 
   function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId);
     dispatch(fetchProductDetail(getCurrentProductId));
   }
 
-  function handleAddToCart(getCurrentProductId) {
-    dispatch(addToCart({ userId: user?.id }));
+  function handleAddtoCart(getCurrentProductId) {
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast.success("Product is added to cart");
+      }
+    });
   }
   useEffect(() => {
     if (productDetails !== null) setIsOpenDetailsDialog(true);
@@ -105,9 +117,6 @@ const ProductListing = () => {
     }
   }, [filters]);
 
-  console.log(productDetails);
-
-  console.log(searchParams);
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
       <ProductFilter filters={filters} handleFilters={handleFilters} />
@@ -150,7 +159,7 @@ const ProductListing = () => {
                 <ShoppingProductTile
                   product={productItem}
                   handleGetProductDetails={handleGetProductDetails}
-                  handleAddToCart={handleAddToCart}
+                  handleAddtoCart={handleAddtoCart}
                 />
               ))
             : null}
