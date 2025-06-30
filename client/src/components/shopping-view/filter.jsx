@@ -1,10 +1,10 @@
 import { filterOptions } from "@/config";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
 
-const ProductFilter = ({ filters, handleFilters }) => {
+function ProductFilter({ filters, handleFilter }) {
   return (
     <div className="bg-background rounded-lg shadow-sm">
       <div className="p-4 border-b">
@@ -25,7 +25,7 @@ const ProductFilter = ({ filters, handleFilters }) => {
                         filters[keyItem] &&
                         filters[keyItem].indexOf(option.id) > -1
                       }
-                      onCheckedChange={() => handleFilters(keyItem, option.id)}
+                      onCheckedChange={() => handleFilter(keyItem, option.id)}
                     />
                     {option.label}
                   </Label>
@@ -38,6 +38,6 @@ const ProductFilter = ({ filters, handleFilters }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ProductFilter;

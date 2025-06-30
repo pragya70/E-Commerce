@@ -13,12 +13,12 @@ const UserCartItemsContent = ({ cartItems }) => {
       deleteCartItem({
         userId: user?.id,
         productId: getCartItem?.productId,
-      }).then((data) => {
-        if (data?.payload?.success) {
-          toast.success("Cart Item is deleted ");
-        }
       })
-    );
+    ).then((data) => {
+      if (data?.payload?.success) {
+        toast.success("Cart Item is deleted");
+      }
+    });
   }
 
   function handleUpdateQuantity(getCartItem, typeOfAction) {
@@ -77,7 +77,7 @@ const UserCartItemsContent = ({ cartItems }) => {
           $
           {(
             (cartItems?.salePrice ? cartItems?.salePrice : cartItems?.price) *
-            cartItems.quantity
+            cartItems?.quantity
           ).toFixed(2)}
         </p>
         <Trash
